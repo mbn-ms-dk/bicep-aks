@@ -1,0 +1,18 @@
+baseline='mbn'
+location='eastus'
+
+# Create base64 script value
+script64=$(cat script.sh | base64)
+
+# Generate SSH keypair and pass to public key as parameter
+ssh-keygen -m PEM -t rsa -b 4096 -C '' -f ./mbnsshkey.pem
+pubkeydata=$(cat mbnsshkey.pem.pub)
+
+# Create/Update Deployment (replace aad group ID)
+az deployment sub create -n 'Dep-'$baseline -l $location -f main.bicep --parameters baseName=$baseline --parameters script64=$script64 --parameters pubkeydata=$pubkeydata --parameters aadids='e822cf30-7f5e-4968-a215-5cc48d538580'
+
+# Attach ACR and get ACR Name
+az aks update -n $baseline'aks' -g 'rg-'$baseline --attach-acr 'acr-'$baseline'-bicep'
+
+# Get Credentials
+az aks get-credentials -n 'aks-'$baseline -g 'rg-'$baseline
