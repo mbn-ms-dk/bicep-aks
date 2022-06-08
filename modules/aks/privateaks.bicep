@@ -22,7 +22,7 @@ resource aksCluster 'Microsoft.ContainerService/managedClusters@2022-03-01' = {
       {
         name: 'default'
         count: 2
-        vmSize: 'Standard_D4s'
+        vmSize: 'Standard_D4s_V3'
         mode: 'System'
         maxCount: 5
         minCount: 2
@@ -63,6 +63,14 @@ resource aksCluster 'Microsoft.ContainerService/managedClusters@2022-03-01' = {
         enabled: true
       }
     }
+  }
+}
+
+module aksPvtDNSContrib '../Identity/role.bicep' = {
+  name: 'aksPvtDNSContrib'
+  params: {
+    principalid: principalId
+    roleGuid: 'b12aa53e-6015-4669-85d0-8515ebb3ae7f' //Private DNS Zone Contributor
   }
 }
 
