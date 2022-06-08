@@ -1,5 +1,5 @@
-$baseline='mbn'
+$baseline="mbn"
 
 # Cleanup
 az group delete -g "rg-$baseline" -y
-az deployment sub delete -n "'Dep-$baseline"
+az deployment sub delete -n "Dep-$baseline"
