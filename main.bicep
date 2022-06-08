@@ -49,7 +49,7 @@ param spokeVNETdefaultSubnet object = {
 //variables
 var rgName = 'rg-${baseName}'
 //acr needs a unique name
-var acrName = 'acr-${baseName}-bicep' //'acr${uniqueString(rgName)}'
+var acrName = 'acr${baseName}bicep' //'acr${uniqueString(rgName)}'
 //aad groups
 var aadGroupdIds = array(aadids)
 

@@ -1,7 +1,7 @@
 param subnetId string
 param publicKey string
 param script64 string
-param userName string = 'azureuser'
+param usrName string = 'azureuser'
 param location string
 
 module mbnnic '../vnet/nic.bicep' = {
@@ -13,18 +13,18 @@ module mbnnic '../vnet/nic.bicep' = {
 }
 
 //jumpbox
-resource jumpbox 'Microsoft.Compute/virtualMachines@2021-11-01' = {
+resource jumpbox 'Microsoft.Compute/virtualMachines@2021-03-01' = {
   name: 'jumpbox'
   location: location
   properties: {
     osProfile: {
       computerName: 'jumpbox'
-      adminUsername: userName
+      adminUsername: usrName
       linuxConfiguration: {
         ssh: {
           publicKeys: [
             {
-              path: 'home/azureuser/.ssh/authorized_keys'
+              path: '/home/azureuser/.ssh/authorized_keys'
               keyData: publicKey
             }
           ]
@@ -33,24 +33,24 @@ resource jumpbox 'Microsoft.Compute/virtualMachines@2021-11-01' = {
       }
     }
     hardwareProfile: {
-      vmSize: 'Standard_A2'
+      vmSize: 'Standard_B2s'
     }
-    storageProfile:{
-      osDisk:{
+    storageProfile: {
+      osDisk: {
         createOption: 'FromImage'
         managedDisk: {
           storageAccountType: 'Standard_LRS'
         }
       }
       imageReference: {
-        publisher: 'canonical'
-        offer: 'ubuntuServer'
-        sku: '20-04-LTS'
+        publisher: 'Canonical'
+        offer: 'UbuntuServer'
+        sku: '18.04-LTS'
         version: 'latest'
       }
     }
     networkProfile: {
-      networkInterfaces:[
+      networkInterfaces: [
         {
           id: mbnnic.outputs.nicId
         }
@@ -59,8 +59,7 @@ resource jumpbox 'Microsoft.Compute/virtualMachines@2021-11-01' = {
   }
 }
 
-//extensions
-resource vmext 'Microsoft.Compute/virtualMachines/extensions@2021-11-01' = {
+resource vmext 'Microsoft.Compute/virtualMachines/extensions@2021-03-01' = {
   name: '${jumpbox.name}/csscript'
   location: location
   properties: {
