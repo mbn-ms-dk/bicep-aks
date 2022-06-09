@@ -1,7 +1,7 @@
 param subnetId string
 param location string
 
-resource mbnnic 'Microsoft.Network/networkInterfaces@2021-08-01' = {
+resource jumpboxnic 'Microsoft.Network/networkInterfaces@2021-08-01' = {
   name: 'mbnnic'
   location: location
   properties: {
@@ -19,5 +19,5 @@ resource mbnnic 'Microsoft.Network/networkInterfaces@2021-08-01' = {
   }
 }
 
-output nicName string = mbnnic.name
-output nicId string = mbnnic.id
+output nicName string = jumpboxnic.name
+output nicId string = jumpboxnic.id

@@ -2,6 +2,12 @@
 #############################
 # Script Definition
 #############################
+echo "Checking if /var/log/deploymentscriptlog exist"
+if [[ ! -f "/var/log/deploymentscriptlog"]]
+then
+    echo "Creating logfile"
+    sudo mkdir /var/log/deploymentscriptlog
+fi
 logpath=/var/log/deploymentscriptlog
 
 #############################

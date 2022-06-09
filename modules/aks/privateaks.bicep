@@ -22,7 +22,7 @@ resource aksCluster 'Microsoft.ContainerService/managedClusters@2022-03-01' = {
       {
         name: 'default'
         count: 2
-        vmSize: 'Standard_D4s_V3'
+        vmSize: 'standard_dc4ds_v3' //'Standard_D4s_V3'
         mode: 'System'
         maxCount: 5
         minCount: 2
@@ -66,7 +66,7 @@ resource aksCluster 'Microsoft.ContainerService/managedClusters@2022-03-01' = {
   }
 }
 
-module aksPvtDNSContrib '../Identity/role.bicep' = {
+module aksPrivateDNSZoneContributor '../Identity/role.bicep' = {
   name: 'aksPvtDNSContrib'
   params: {
     principalid: principalId
@@ -74,7 +74,7 @@ module aksPvtDNSContrib '../Identity/role.bicep' = {
   }
 }
 
-module aksPrivateDNSContrib '../identity/role.bicep' = {
+module aksNetworkContributor '../identity/role.bicep' = {
   name: 'aksPrivateDNSContrib'
   params: {
     principalid: principalId

@@ -1,5 +1,5 @@
-$baseline='mbn'
-$location='eastus'
+$baseline='mbn1'
+$location='westeurope'
 
 # Create base64 script value
 $script64=$(Get-Content script.sh)

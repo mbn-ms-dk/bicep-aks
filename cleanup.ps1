@@ -1,4 +1,4 @@
-$baseline="mbn"
+$baseline="mbn1"
 
 # Cleanup
 az group delete -g "rg-$baseline" -y

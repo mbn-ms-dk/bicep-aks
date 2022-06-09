@@ -4,7 +4,7 @@ param script64 string
 param usrName string = 'azureuser'
 param location string
 
-module mbnnic '../vnet/nic.bicep' = {
+module jumpboxnic '../vnet/nic.bicep' = {
   name: 'mbnnic'
   params: {
     subnetId: subnetId
@@ -52,7 +52,7 @@ resource jumpbox 'Microsoft.Compute/virtualMachines@2021-03-01' = {
     networkProfile: {
       networkInterfaces: [
         {
-          id: mbnnic.outputs.nicId
+          id: jumpboxnic.outputs.nicId
         }
       ]
     }
